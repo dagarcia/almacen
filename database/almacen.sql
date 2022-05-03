@@ -1,17 +1,9 @@
-/*
-Navicat MySQL Data Transfer
+CREATE DATABASE almacen CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-Source Server         : localhost
-Source Server Version : 50505
-Source Host           : localhost:3306
-Source Database       : almacen
+CREATE USER 'almacen_user'@'%' IDENTIFIED BY 'almacen';
+GRANT SELECT,INSERT,UPDATE,DELETE ON alamacen.* TO 'almacen_user'@'%';
 
-Target Server Type    : MYSQL
-Target Server Version : 50505
-File Encoding         : 65001
-
-Date: 2022-05-02 22:28:40
-*/
+USE almacen;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -62,3 +54,5 @@ CREATE TABLE `zapatos` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_zapatos_productos` FOREIGN KEY (`id`) REFERENCES `productos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SET FOREIGN_KEY_CHECKS=1;

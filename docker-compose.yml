@@ -11,18 +11,18 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=almacen
     ports:
-      - 3306:3306
+      - 33066:3306
     volumes:
       - ./mysql-data:/var/lib/mysql
       - ./database:/docker-entrypoint-initdb.d
   web:
     build:
       context: .
-      dockerfile: ./docker/dockerfile
+      dockerfile: ./docker/Dockerfile
     network_mode: bridge
     hostname: apache-almacen
     ports:
-      - 80:80
+      - 8088:80
     depends_on:
       - db
     restart: on-failure
