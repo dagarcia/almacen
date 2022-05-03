@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    network_mode: bridge
+    hostname: mysql-almacen
+    command:
+      --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=almacen
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile
+    network_mode: bridge
+    hostname: apache-almacen
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    restart: on-failure
+    volumes:
+      - '.:/var/www'
