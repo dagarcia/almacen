@@ -18,6 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class Producto
 {
+    const UTILIDAD_LAPTOP = 1.4;
+    const UTILIDAD_TELEVISOR = 1.35;
+    const UTILIDAD_ZAPATOS = 1.3;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -44,6 +48,13 @@ abstract class Producto
      * @ORM\Column(name="costo", type="decimal", precision=10, scale=2)
      */
     private $costo;
+
+    // /**
+    //  * @ORM\Column(name="categoria", type="string", length=15)
+    //  */
+    // private $categoria;
+
+    private $venta;
 
     public function getId(): ?int
     {
@@ -88,13 +99,37 @@ abstract class Producto
 
     public function getCosto(): ?string
     {
-        return $this->costo;
+        return $this->_formatMoney($this->costo);
     }
 
-    public function setCosto(string $costo): self
+    public function setCosto(float $costo): self
     {
         $this->costo = $costo;
 
         return $this;
     }
+
+    public function getVenta(): ?string
+    {
+        if (!isset($this->venta)) {
+            switch (true) {
+                case $this instanceof Televisor:
+                    $this->venta = $this->costo * self::UTILIDAD_TELEVISOR;
+                break;
+                case $this instanceof Laptop:
+                    $this->venta = $this->costo * self::UTILIDAD_LAPTOP;
+                break;
+                case $this instanceof Zapatos:
+                    $this->venta = $this->costo * self::UTILIDAD_ZAPATOS;
+                break;
+            }
+        }
+        return $this->_formatMoney($this->venta);
+    }
+
+    private function _formatMoney(float $number): ?string
+    {
+        return number_format($number, 2, ",", ".");
+    }
+
 }

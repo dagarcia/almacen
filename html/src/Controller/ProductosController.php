@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Televisor;
 use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use stdClass;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,9 +35,22 @@ class ProductosController extends AbstractController
      */
     public function getAll() 
     {
-        $productos = $this->productoRepository->findAll();
+        try {
+            $productos = $this->productoRepository->findAll();
+            $status = (!$productos) ? Response::HTTP_NOT_FOUND : Response::HTTP_OK;                
+        } catch (\Throwable $th) {
+            $error = $th->getMessage();
+            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            $productos = null;
+        }
+        
+        $response = [
+            "success" => (isset($error)) ? false : true,
+            "error" => (isset($error)) ? $error : null,
+            "data" => $productos
+        ];
 
-        return $this->json($productos, Response::HTTP_OK);
+        return $this->json($response, $status);
     }
 
     /**
@@ -52,35 +65,39 @@ class ProductosController extends AbstractController
             $responseStatus = Response::HTTP_NOT_FOUND;
         }
 
-        
-
         return $this->json(["producto" => $producto], Response::HTTP_OK);
     }
 
     /**
-     * @Route("/", name="create_televisor")
+     * @Route("/", name="create_producto", methods={"POST"})
      */
-    public function createTelevisor()
+    public function create(Request $request, LoggerInterface $logger)
     {
-        $tv = new Televisor();
-        $tv->setNombre("Televisor");
-        $tv->setMarca("Philips");
-        $tv->setCosto(1000.50);
-        $tv->setSku("TV-PHIL-50");
-        $tv->setTamanioPantalla('50"');
-        $tv->setTipoPantalla("LCD");
+        $contenido = json_decode($request->getContent(), true);
+        $logger->info("diego");
+        $logger->info("categoria: " . $contenido);
 
-        try {
-            $this->_entityManager->persist($tv);
-            $this->_entityManager->flush();
-            return $this->json($tv, Response::HTTP_CREATED);
-        } catch (\Throwable $th) {
-            return $this->json([
-                "result" => "error",
-                "message" => $th->getMessage(),
-            ], Response::HTTP_BAD_REQUEST);
-        }
+        // switch ($categoria) {
+        //     case 'televisor':
+        //         $producto = new Televisor();
+        //         $producto->setTamanioPantalla('50"');
+        //         $producto->setTipoPantalla("LCD");
+        //     break;
+        // }
+
         
+
+        // try {
+        //     $this->entityManager->persist($tv);
+        //     $this->entityManager->flush();
+        //     return $this->json($tv, Response::HTTP_CREATED);
+        // } catch (\Throwable $th) {
+        //     return $this->json([
+        //         "result" => "error",
+        //         "message" => $th->getMessage(),
+        //     ], Response::HTTP_BAD_REQUEST);
+        // }
+        return $this->json($contenido);
 
     }
 }
