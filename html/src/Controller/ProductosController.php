@@ -27,11 +27,11 @@ class ProductosController extends AbstractController
     }   
 
     /**
-     * @Route("/", name="productos")
+     * @Route("/", name="get_productos", methods={"GET"})
      * 
      * @return JsonResponse
      */
-    public function listAction(Request $request) 
+    public function getAll(Request $request) 
     {
         // $producto = [
         //     "nombre" => "iphone x",
@@ -47,15 +47,15 @@ class ProductosController extends AbstractController
     }
 
     /**
-     * 
+     * @Route("/{id}", name="get_producto_by_id", methods={"GET"})
      */
-    public function getProductoAction(Request $request)
+    public function get($id)
     {
 
     }
 
     /**
-     * @Route("/televisores", name="create_televisor")
+     * @Route("/", name="create_televisor")
      */
     public function createTelevisor()
     {
