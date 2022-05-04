@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Televisor;
+use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,12 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductosController extends AbstractController
 {
 
-    private $_productoRepository;
-    private $_entityManager;
+    private $productoRepository;
+    private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ProductoRepository $productoRepository)
     {
-        $this->_entityManager = $entityManager;
+        $this->entityManager = $entityManager;
+        $this->productoRepository = $productoRepository;
 
     }   
 
@@ -31,27 +33,28 @@ class ProductosController extends AbstractController
      * 
      * @return JsonResponse
      */
-    public function getAll(Request $request) 
+    public function getAll() 
     {
-        // $producto = [
-        //     "nombre" => "iphone x",
-        //     "precio" => "$1000"
-        // ];
+        $productos = $this->productoRepository->findAll();
 
-        $producto = new stdClass();
-        $producto->nombre = "iPhoneXXX";
-        $producto->precio = "$200";
-
-
-        return $this->json($producto, Response::HTTP_OK);
+        return $this->json($productos, Response::HTTP_OK);
     }
 
     /**
      * @Route("/{id}", name="get_producto_by_id", methods={"GET"})
      */
-    public function get($id)
+    public function getOne($id)
     {
+        $producto = $this->productoRepository->find($id);
+        $responseStatus = Response::HTTP_OK;
 
+        if (!$producto) {
+            $responseStatus = Response::HTTP_NOT_FOUND;
+        }
+
+        
+
+        return $this->json(["producto" => $producto], Response::HTTP_OK);
     }
 
     /**
