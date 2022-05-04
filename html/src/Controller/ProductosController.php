@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Televisor;
 use Doctrine\ORM\EntityManagerInterface;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,18 +18,20 @@ class ProductosController extends AbstractController
 {
 
     private $_productoRepository;
+    private $_entityManager;
 
-    public function __construct()
+    public function __construct(EntityManagerInterface $entityManager)
     {
+        $this->_entityManager = $entityManager;
 
-    }
+    }   
 
     /**
      * @Route("/", name="productos")
      * 
      * @return JsonResponse
      */
-    public function listAction(Request $request, EntityManagerInterface $entityManager) 
+    public function listAction(Request $request) 
     {
         // $producto = [
         //     "nombre" => "iphone x",
@@ -48,6 +51,33 @@ class ProductosController extends AbstractController
      */
     public function getProductoAction(Request $request)
     {
+
+    }
+
+    /**
+     * @Route("/televisores", name="create_televisor")
+     */
+    public function createTelevisor()
+    {
+        $tv = new Televisor();
+        $tv->setNombre("Televisor");
+        $tv->setMarca("Philips");
+        $tv->setCosto(1000.50);
+        $tv->setSku("TV-PHIL-50");
+        $tv->setTamanioPantalla('50"');
+        $tv->setTipoPantalla("LCD");
+
+        try {
+            $this->_entityManager->persist($tv);
+            $this->_entityManager->flush();
+            return $this->json($tv, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return $this->json([
+                "result" => "error",
+                "message" => $th->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
 
     }
 }
