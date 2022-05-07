@@ -17,7 +17,7 @@ abstract class ProductValidator
 
     private $errors=[];
 
-    static public function validateProductData(stdClass $productData): ?bool
+    static public function validateProductData(?stdClass $productData): ?bool
     {
         if (!(isset($productData->categoria) && isset($productData->nombre) && isset($productData->sku) && isset($productData->marca) && isset($productData->costo))) {
             throw new \Exception(sprintf(self::ERROR_INVALID_FORMAT, "'categoria', 'nombre', 'sku', 'marca' y 'costo'"));
