@@ -86,12 +86,11 @@ class ProductosController extends AbstractController
     public function create(Request $request, LoggerInterface $logger)
     {
         $data = json_decode($request->getContent());
-
+        $status = Response::HTTP_OK;
         try {
             $valid = ProductValidator::validateProductData($data);
         } catch (\Throwable $th) {
             $error = $th->getMessage();
-            $status = Response::HTTP_BAD_REQUEST;
             $producto = null;
             $valid = false;
         }
@@ -127,7 +126,6 @@ class ProductosController extends AbstractController
                 $error = $th->getMessage() . "2";
                 if (stripos($error, 'idx_productos_sku')) {
                     $error = "El SKU que intenta ingresar ya existe para otro producto";
-                    $status = Response::HTTP_BAD_REQUEST;
                 } else {
                     $status = Response::HTTP_INTERNAL_SERVER_ERROR;
                 }

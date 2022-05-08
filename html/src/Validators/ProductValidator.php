@@ -66,7 +66,7 @@ abstract class ProductValidator
                     throw new \Exception(sprintf(self::ERROR_INVALID_DATA, "'procesador'", implode("|", self::VALID_PROCESSORS)));
                 }
 
-                if (empty($productData->tamanio_pantalla)) {
+                if (empty($productData->memoria_ram)) {
                     throw new \Exception(sprintf(self::ERROR_REQUIRED, "'memoria_ram'"));
                 }
 
@@ -83,7 +83,7 @@ abstract class ProductValidator
                     throw new \Exception(sprintf(self::ERROR_INVALID_DATA, "'material'", implode("|", self::VALID_MATERIALS)));
                 }
 
-                if (empty($productData->tamanio_pantalla)) {
+                if (empty($productData->talle)) {
                     throw new \Exception(sprintf(self::ERROR_REQUIRED, "'talle'"));
                 }
 
