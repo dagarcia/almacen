@@ -49,13 +49,6 @@ abstract class Producto
      */
     private $costo;
 
-    // /**
-    //  * @ORM\Column(name="categoria", type="string", length=15)
-    //  */
-    // private $categoria;
-
-    private $venta;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -111,25 +104,41 @@ abstract class Producto
 
     public function getVenta(): ?string
     {
-        if (!isset($this->venta)) {
-            switch (true) {
-                case $this instanceof Televisor:
-                    $this->venta = $this->costo * self::UTILIDAD_TELEVISOR;
-                break;
-                case $this instanceof Laptop:
-                    $this->venta = $this->costo * self::UTILIDAD_LAPTOP;
-                break;
-                case $this instanceof Zapatos:
-                    $this->venta = $this->costo * self::UTILIDAD_ZAPATOS;
-                break;
-            }
+        switch (true) {
+            case $this instanceof Televisor:
+                $venta = $this->costo * self::UTILIDAD_TELEVISOR;
+            break;
+            case $this instanceof Laptop:
+                $venta = $this->costo * self::UTILIDAD_LAPTOP;
+            break;
+            case $this instanceof Zapatos:
+                $venta = $this->costo * self::UTILIDAD_ZAPATOS;
+            break;
         }
-        return $this->_formatMoney($this->venta);
+
+        return $this->_formatMoney($venta);
     }
 
     private function _formatMoney(float $number): ?string
     {
         return number_format($number, 2, ",", ".");
+    }
+
+    public function getCategoria(): ?string
+    {
+        switch (true) {
+            case $this instanceof Televisor:
+                $categoria = "Televisor";
+            break;
+            case $this instanceof Laptop:
+                $categoria = "Laptop";
+            break;
+            case $this instanceof Zapatos:
+                $categoria = "Zapatos";
+            break;
+        }
+
+        return $categoria;
     }
 
 }
