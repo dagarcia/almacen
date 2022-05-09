@@ -1,20 +1,13 @@
 # Práctica de almacén
 
-## Descripcion
+## Descripción
 
-Práctica de alamcén back y front
-
-## Fuente
-
-[gitlab.dat](http://gitlab.dat:81/Ferozo/ferozo-5)
+Práctica de almacén back y front
 
 ## Requerimientos
 
 Debe tener instalado 
-[git](https://git-scm.com/)
-[docker](https://docs.docker.com/engine/install/) 
-[docker-compose](https://docs.docker.com/compose/install/)
-[composer](https://getcomposer.org/download/)
+[git](https://git-scm.com/), [docker](https://docs.docker.com/engine/install/), [docker-compose](https://docs.docker.com/compose/install/) y [composer](https://getcomposer.org/download/)
 
 ## Componentes
 
@@ -29,9 +22,9 @@ Debe tener instalado
 
 * React 18
 
-## Instalacion (construir e iniciar los contenedores por primera vez)
+## Instalación (construir e iniciar los contenedores por primera vez)
 
-Luego de clonarse o descargarse el codigo del proyecto desde el repo, ejecutar:
+Luego de clonarse o descargarse el código del proyecto desde el repo, ejecutar:
 
 ### Iniciar contenedores docker
 Dentro del directorio raiz del proyecto (donde se encuentra el archivo docker-compose.yml)
@@ -62,7 +55,7 @@ http://localhost:8088/public/productos/ -> Método GET: obtiene todos los produc
 http://localhost:8088/public/productos/{id} -> Método GET: obtiene el producto con el id especificado
 http://localhost:8088/public/productos/ -> Método POST: registra un producto con los datos del body
 
-Formato de body para crear productos:
+### Formato de body para crear productos:
 
 Televisor:
 {
@@ -72,7 +65,7 @@ Televisor:
   "marca": "String",
   "costo": "String" o Float,
   "tipo_pantalla": "LCD"|"LED"|"OLED",
-  "tamanio_pantalla": "50",
+  "tamanio_pantalla": "50"
 }
 
 Zapatos:
@@ -94,10 +87,10 @@ Laptop:
   "marca": "String",
   "costo": "String" o Float,
   "procesador": "Intel"|"AMD",
-  "memoria_ram": "16GB",
+  "memoria_ram": "16GB"
 }
 
-## FRONT
+## Front
 
 Para probar el front se debe ingresar la url "http://localhost:8088/public/almacen/index.html" en el navegador.
 Esto mostrará una pantalla con un menú y un mensaje de "404 not found", hacer click en "Almacén" del menú para que tome correctamente la url del front.
