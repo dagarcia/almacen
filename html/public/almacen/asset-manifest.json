@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/public/almacen/static/css/main.6e9650da.css",
+    "main.js": "/public/almacen/static/js/main.a673945e.js",
+    "static/js/787.fc748af5.chunk.js": "/public/almacen/static/js/787.fc748af5.chunk.js",
+    "index.html": "/public/almacen/index.html",
+    "main.6e9650da.css.map": "/public/almacen/static/css/main.6e9650da.css.map",
+    "main.a673945e.js.map": "/public/almacen/static/js/main.a673945e.js.map",
+    "787.fc748af5.chunk.js.map": "/public/almacen/static/js/787.fc748af5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6e9650da.css",
+    "static/js/main.a673945e.js"
+  ]
+}
