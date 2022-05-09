@@ -94,4 +94,5 @@ Laptop:
 
 Para probar el front se debe ingresar la url "http://localhost:8088/public/almacen/index.html" en el navegador.
 Esto mostrará una pantalla con un menú y un mensaje de "404 not found", hacer click en "Almacén" del menú para que tome correctamente la url del front.
+El código fuente del front (react) se encuentra en la carpeta "front"
 
